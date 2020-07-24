@@ -3,7 +3,15 @@
 import os
 import random
 import discord
+from discord.ext import commands
 from dotenv import load_dotenv
+import logging
+
+logger = logging.getLogger('discord')
+logger.setLevel(logging.DEBUG)
+handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
+handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
+logger.addHandler(handler)
 
 
 # utility functions -------------------------------
@@ -14,36 +22,53 @@ def load_env_vars():
 
     var_dict['token'] = os.getenv('DISCORD_TOKEN')
     var_dict['guild'] = os.getenv('DISCORD_GUILD')
+    var_dict['prefix'] = os.getenv('PREFIX')
 
     return var_dict
 # end utility functions ----------------------------
 
 
-client = discord.Client()
 env_vars = load_env_vars()
+bot = commands.Bot(command_prefix=env_vars['prefix'])
+#client = discord.Client()
+url = 'mongodb://localhost:27017'
+ghoztDb = 'GhoztDB'
 
 
-@client.event
+@bot.event
 async def on_ready():
-    guild = discord.utils.get(client.guilds, name=env_vars['guild'])
+    print(f'{bot.user.name} has connected to Discord')
+    #guild = discord.utils.get(client.guilds, name=env_vars['guild'])
+    guilds = bot.guilds
+    print(f'all guilds: {guilds}')
+    for x in range(0, len(guilds)):
+        print(f'guild name: {guilds[x].name}')
+        print(f'guild id: {guilds[x].id}')
 
-    print(f'{client.user} has connected to Discord')
-    print(f'{guild.name}(id: {guild.id})')
 
-
-@client.event
+@bot.event
 async def on_member_join(member):
-    guild = discord.utils.get(client.guilds, name=env_vars['guild'])
     await member.create_dm()
     await member.dm_channel.send(
-        f'Hi {member.name}, welcome to {guild.name}!'
+        f'Hi {member.name}, welcome to {member.guild}!'
     )
 
 
-@client.event
+@bot.event
 async def on_message(message):
-    if message.author == client.user:
+    print(f'bot user: {bot.user}')
+    print(f'message author: {message.author}')
+    if message.author == bot.user:
         return
+
+    if message.content.startswith(env_vars['prefix']):
+        print(f'Ghozt command found in message')
+    else:
+        return
+
+    #command_length = 1
+    #args = message.content[len(env_vars['prefix']):].strip().split()
+    #if len(args) > 2:
 
     coltergeizt_quotes = [
         "There are people that can afford living and there are people who can't. - 2019",
@@ -53,10 +78,10 @@ async def on_message(message):
         "Yeah those lions going to the gym too much, tryin' to get those jazelles. - 2019"
     ]
 
-    if message.content == '!geizt quote':
+    if message.content == '!#geizt quote':
         response = random.choice(coltergeizt_quotes)
         await message.channel.send(response)
 
 
 if __name__ == "__main__":
-    client.run(env_vars['token'])
+    bot.run(env_vars['token'])
