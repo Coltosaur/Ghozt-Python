@@ -1,0 +1,15 @@
+# Logs
+logs
+*.log
+
+# Dependency directories
+venv
+
+# Output of 'npm pack'
+*.tgz
+
+# PyCharm idea bits
+.idea
+
+# the config file that holds the super secret Bot token
+.env
