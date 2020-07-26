@@ -1,8 +1,9 @@
 # bot.py
 # developed by Coltergeizt, 1/20/2020
-import os
+from os import listdir, getenv
+from os.path import isfile, join
+import traceback
 import random
-import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 import logging
@@ -20,17 +21,17 @@ def load_env_vars():
     var_dict = {}
     load_dotenv()
 
-    var_dict['token'] = os.getenv('DISCORD_TOKEN')
-    var_dict['guild'] = os.getenv('DISCORD_GUILD')
-    var_dict['prefix'] = os.getenv('PREFIX')
+    var_dict['token'] = getenv('DISCORD_TOKEN')
+    var_dict['guild'] = getenv('DISCORD_GUILD')
+    var_dict['prefix'] = getenv('PREFIX')
 
     return var_dict
 # end utility functions ----------------------------
 
 
 env_vars = load_env_vars()
-bot = commands.Bot(command_prefix=env_vars['prefix'])
-#client = discord.Client()
+cogs_dir = "cogs"
+bot = commands.Bot(command_prefix=env_vars['prefix'], case_insensitive=True)
 url = 'mongodb://localhost:27017'
 ghoztDb = 'GhoztDB'
 
@@ -38,7 +39,7 @@ ghoztDb = 'GhoztDB'
 @bot.event
 async def on_ready():
     print(f'{bot.user.name} has connected to Discord')
-    #guild = discord.utils.get(client.guilds, name=env_vars['guild'])
+    '''guild = discord.utils.get(client.guilds, name=env_vars['guild'])'''
     guilds = bot.guilds
     print(f'all guilds: {guilds}')
     for x in range(0, len(guilds)):
@@ -54,34 +55,12 @@ async def on_member_join(member):
     )
 
 
-@bot.event
-async def on_message(message):
-    print(f'bot user: {bot.user}')
-    print(f'message author: {message.author}')
-    if message.author == bot.user:
-        return
-
-    if message.content.startswith(env_vars['prefix']):
-        print(f'Ghozt command found in message')
-    else:
-        return
-
-    #command_length = 1
-    #args = message.content[len(env_vars['prefix']):].strip().split()
-    #if len(args) > 2:
-
-    coltergeizt_quotes = [
-        "There are people that can afford living and there are people who can't. - 2019",
-        "I'm just sitting here all alone with my Sprite and peanut butter. - 2019",
-        "There's no she, there's just me. - 2019",
-        "Ooooh, she's a big gurl. - 2019",
-        "Yeah those lions going to the gym too much, tryin' to get those jazelles. - 2019"
-    ]
-
-    if message.content == '!#geizt quote':
-        response = random.choice(coltergeizt_quotes)
-        await message.channel.send(response)
-
-
 if __name__ == "__main__":
+    for extension in [f.replace('.py', '') for f in listdir(cogs_dir) if isfile(join(cogs_dir, f))]:
+        try:
+            bot.load_extension(cogs_dir + "." + extension)
+        except Exception as ex:
+            print(f'Failed to load extension {extension}.')
+            traceback.print_exc()
+
     bot.run(env_vars['token'])

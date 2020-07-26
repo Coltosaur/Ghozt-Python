@@ -5,6 +5,9 @@ logs
 # Dependency directories
 venv
 
+# output of the python files
+*.pyc
+
 # Output of 'npm pack'
 *.tgz
 
