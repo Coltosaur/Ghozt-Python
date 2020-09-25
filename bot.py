@@ -3,7 +3,6 @@
 from os import listdir, getenv
 from os.path import isfile, join
 import traceback
-import random
 from discord.ext import commands
 from dotenv import load_dotenv
 import logging
@@ -23,10 +22,10 @@ def load_env_vars():
 
     var_dict['token'] = getenv('DISCORD_TOKEN')
     var_dict['guild'] = getenv('DISCORD_GUILD')
+    var_dict['bot_owner_id'] = getenv('BOT_OWNER_ID')
     var_dict['prefix'] = getenv('PREFIX')
 
     return var_dict
-# end utility functions ----------------------------
 
 
 env_vars = load_env_vars()
@@ -34,6 +33,11 @@ cogs_dir = "cogs"
 bot = commands.Bot(command_prefix=env_vars['prefix'], case_insensitive=True)
 url = 'mongodb://localhost:27017'
 ghoztDb = 'GhoztDB'
+
+
+def check_if_bot_owner(ctx):
+    return ctx.message.author.id == int(env_vars['bot_owner_id'])
+# end utility functions ----------------------------
 
 
 @bot.event

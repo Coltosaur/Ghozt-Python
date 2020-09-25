@@ -2,6 +2,10 @@
 logs
 *.log
 
+# counters/misc
+counters.txt
+*.png
+
 # Dependency directories
 venv
 

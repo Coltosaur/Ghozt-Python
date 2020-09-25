@@ -1,11 +1,13 @@
 from discord.ext import commands
+from bot import check_if_bot_owner
 
 
 class EXTLOADER(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
+    @commands.command(hidden=True)
+    @commands.check(check_if_bot_owner)
     async def load(self, ctx, extension_name: str):
         """Loads an extension."""
         try:
@@ -15,7 +17,8 @@ class EXTLOADER(commands.Cog):
             return
         await ctx.send("{} loaded.".format(extension_name))
 
-    @commands.command()
+    @commands.command(hidden=True)
+    @commands.check(check_if_bot_owner)
     async def unload(self, ctx, extension_name: str):
         """Unloads an extension."""
         self.bot.unload_extension(extension_name)
