@@ -69,5 +69,5 @@ class COUNTER(commands.Cog):
         return counter_dict
 
 
-def setup(bot):
-    bot.add_cog(COUNTER(bot))
+async def setup(bot):
+    await bot.add_cog(COUNTER(bot))

@@ -20,5 +20,5 @@ class BATSIGNAL(commands.Cog):
         await ctx.send(file=File(self.bat_signal_file))
 
 
-def setup(bot):
-    bot.add_cog(BATSIGNAL(bot))
+async def setup(bot):
+    await bot.add_cog(BATSIGNAL(bot))

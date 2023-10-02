@@ -25,5 +25,5 @@ class EXTLOADER(commands.Cog):
         await ctx.send("{} unloaded.".format(extension_name))
 
 
-def setup(bot):
-    bot.add_cog(EXTLOADER(bot))
+async def setup(bot):
+    await bot.add_cog(EXTLOADER(bot))

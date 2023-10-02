@@ -3,6 +3,9 @@
 from os import listdir, getenv
 from os.path import isfile, join
 import traceback
+import asyncio
+
+import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 import logging
@@ -30,7 +33,7 @@ def load_env_vars():
 
 env_vars = load_env_vars()
 cogs_dir = "cogs"
-bot = commands.Bot(command_prefix=env_vars['prefix'], case_insensitive=True)
+bot = commands.Bot(command_prefix=env_vars['prefix'], case_insensitive=True, intents=discord.Intents.all())
 url = 'mongodb://localhost:27017'
 ghoztDb = 'GhoztDB'
 
@@ -59,12 +62,20 @@ async def on_member_join(member):
     )
 
 
-if __name__ == "__main__":
+async def initial_load_extensions():
     for extension in [f.replace('.py', '') for f in listdir(cogs_dir) if isfile(join(cogs_dir, f))]:
         try:
-            bot.load_extension(cogs_dir + "." + extension)
+            await bot.load_extension(cogs_dir + "." + extension)
         except Exception as ex:
             print(f'Failed to load extension {extension}.')
             traceback.print_exc()
 
-    bot.run(env_vars['token'])
+
+async def main():
+    async with bot:
+        await initial_load_extensions()
+        await bot.start(env_vars['token'])
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
