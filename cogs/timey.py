@@ -20,7 +20,7 @@ class TIMEY(commands.Cog):
             await ctx.send('enter hour and minute using 24 hour time')
             return
 
-        result = "<t:{}>".format(str(unix_time))
+        result = "<t:{}> and unix timestamp: {}".format(str(unix_time), str(unix_time))
         await ctx.send(result)
 
     @commands.command()
@@ -35,7 +35,7 @@ class TIMEY(commands.Cog):
             await ctx.send('usage is ^^timey M D Hr Min - numbers for each one')
             return
 
-        result = "<t:{}>".format(str(unix_time))
+        result = "<t:{}> and unix timestamp: {}".format(str(unix_time), str(unix_time))
         await ctx.send(result)
 
 
