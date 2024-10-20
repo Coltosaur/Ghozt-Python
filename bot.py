@@ -40,6 +40,8 @@ ghoztDb = 'GhoztDB'
 
 def check_if_bot_owner(ctx):
     return ctx.message.author.id == int(env_vars['bot_owner_id'])
+
+
 # end utility functions ----------------------------
 
 

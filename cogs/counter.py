@@ -1,7 +1,7 @@
 from discord.ext import commands
 
 
-class COUNTER(commands.Cog):
+class Counter(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.counter_file = "counters.txt"
@@ -39,7 +39,7 @@ class COUNTER(commands.Cog):
     @commands.command()
     async def current_counters(self, ctx):
         """
-        lets you see all of the current counters for your guild.
+        lets you see all the current counters for your guild.
         :param ctx: context of the command message
         :return: sends a message to the users' discord channel containing a
         list of all named counters
@@ -70,4 +70,4 @@ class COUNTER(commands.Cog):
 
 
 async def setup(bot):
-    await bot.add_cog(COUNTER(bot))
+    await bot.add_cog(Counter(bot))

@@ -8,7 +8,7 @@ class RNG(commands.Cog):
 
     @commands.command()
     async def roll(self, ctx, dice: str):
-        """Rolls a dice in NdN format."""
+        """Rolls a die in NdN format."""
         try:
             rolls, limit = map(int, dice.split('d'))
         except Exception:

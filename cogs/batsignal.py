@@ -2,7 +2,7 @@ from discord.ext import commands
 from discord import Member, File
 
 
-class BATSIGNAL(commands.Cog):
+class BatSignal(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.bat_signal_file = "BatSignal_For_Games.png"
@@ -21,4 +21,4 @@ class BATSIGNAL(commands.Cog):
 
 
 async def setup(bot):
-    await bot.add_cog(BATSIGNAL(bot))
+    await bot.add_cog(BatSignal(bot))

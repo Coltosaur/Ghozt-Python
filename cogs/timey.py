@@ -1,12 +1,14 @@
 from discord.ext import commands
+from discord.app_commands import autocomplete
 import datetime
 
 
-class TIMEY(commands.Cog):
+class Timey(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
     @commands.command()
+    @autocomplete()
     async def timey(self, ctx, hour: int, minute: int):
         """Converts today's date and input hour/minute to a unix timestamp and displays in local time"""
         try:
@@ -40,4 +42,4 @@ class TIMEY(commands.Cog):
 
 
 async def setup(bot):
-    await bot.add_cog(TIMEY(bot))
+    await bot.add_cog(Timey(bot))
