@@ -1,0 +1,6 @@
+URL = 'mongodb://localhost:27017'
+GHOZT_DB = 'GhoztDB'
+BOT_NAME = 'Ghozt'
+DISCORD_GUILD = 'Ruins of Night'
+PREFIX = '^^'
+COGS_DIR = 'cogs'

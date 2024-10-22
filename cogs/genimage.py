@@ -2,7 +2,6 @@ from discord.ext import commands
 from io import BytesIO
 from diffusion_setup import get_pipeline
 from discord import File
-from discord.app_commands import autocomplete
 import torch
 
 
@@ -12,8 +11,7 @@ class GenImage(commands.Cog):
         # Initialize Stable Diffusion pipeline
         self.pipeline = get_pipeline()
 
-    @commands.command(name="generate", with_app_command=True, description="Build all the imagery, literally!")
-    @autocomplete()
+    @commands.hybrid_command(name="generate", with_app_command=True, description="Build all the imagery, literally!")
     async def generate(self, ctx: commands.Context, *, prompt: str):
         """
         command that generates an image based off of a prompt, format <prompt>.

@@ -8,7 +8,6 @@ class Timey(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    @autocomplete()
     async def timey(self, ctx, hour: int, minute: int):
         """Converts today's date and input hour/minute to a unix timestamp and displays in local time"""
         try:
