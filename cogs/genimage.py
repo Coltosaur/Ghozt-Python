@@ -11,7 +11,11 @@ class GenImage(commands.Cog):
         # Initialize Stable Diffusion pipeline
         self.pipeline = get_pipeline()
 
-    @commands.hybrid_command(name="generate", with_app_command=True, description="Build all the imagery, literally!")
+    @commands.hybrid_command(
+        name="generate",
+        with_app_command=True,
+        description="Build all the imagery, literally!",
+    )
     async def generate(self, ctx: commands.Context, *, prompt: str):
         """
         command that generates an image based off of a prompt, format <prompt>.
@@ -27,9 +31,9 @@ class GenImage(commands.Cog):
 
         # Convert image to BytesIO and send it
         with BytesIO() as image_binary:
-            image.save(image_binary, 'PNG')
+            image.save(image_binary, "PNG")
             image_binary.seek(0)
-            await ctx.send(file=File(fp=image_binary, filename='image.png'))
+            await ctx.send(file=File(fp=image_binary, filename="image.png"))
 
 
 async def setup(bot):

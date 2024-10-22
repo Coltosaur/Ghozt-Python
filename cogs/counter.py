@@ -31,8 +31,10 @@ class Counter(commands.Cog):
                     for counter in current_counters.items():
                         counters.write(counter[0] + ":" + str(counter[1]) + "\n")
             except KeyError as e:
-                await ctx.send("```{} is not currently being tracked.\nPlease add the new_counter True option if " \
-                               "adding a new counter.```".format(name))
+                await ctx.send(
+                    "```{} is not currently being tracked.\nPlease add the new_counter True option if "
+                    "adding a new counter.```".format(name)
+                )
             op = self.display_current_counters()
             await ctx.send(op)
 

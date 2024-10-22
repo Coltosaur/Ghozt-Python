@@ -16,9 +16,11 @@ class Timey(commands.Cog):
             year = today.year
             day = today.day
 
-            unix_time = int(datetime.datetime(year, month, day, hour, minute).timestamp())
+            unix_time = int(
+                datetime.datetime(year, month, day, hour, minute).timestamp()
+            )
         except Exception:
-            await ctx.send('enter hour and minute using 24 hour time')
+            await ctx.send("enter hour and minute using 24 hour time")
             return
 
         result = "<t:{}> and unix timestamp: {}".format(str(unix_time), str(unix_time))
@@ -31,9 +33,11 @@ class Timey(commands.Cog):
             today = datetime.date.today()
             year = today.year
 
-            unix_time = int(datetime.datetime(year, month, day, hour, minute).timestamp())
+            unix_time = int(
+                datetime.datetime(year, month, day, hour, minute).timestamp()
+            )
         except Exception:
-            await ctx.send('usage is ^^timey M D Hr Min - numbers for each one')
+            await ctx.send("usage is ^^timey M D Hr Min - numbers for each one")
             return
 
         result = "<t:{}> and unix timestamp: {}".format(str(unix_time), str(unix_time))

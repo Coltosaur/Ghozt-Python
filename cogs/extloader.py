@@ -15,7 +15,11 @@ class ExtLoader(commands.Cog):
     @commands.check(check_if_bot_owner)
     async def get_extension_list(self, ctx):
         extension_list = []
-        for extension in [f.replace('.py', '') for f in listdir(COGS_DIR) if (isfile(join(COGS_DIR, f)) and f.endswith(".py"))]:
+        for extension in [
+            f.replace(".py", "")
+            for f in listdir(COGS_DIR)
+            if (isfile(join(COGS_DIR, f)) and f.endswith(".py"))
+        ]:
             extension_list.append(extension)
         await ctx.send("list of extensions: {}".format(extension_list))
 
